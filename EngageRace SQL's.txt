@@ -1,0 +1,278 @@
+-- Create table
+create table ADMINISTRADOR
+(
+  IDADMINISTRADOR NUMBER(2) not null,
+  LOGIN           VARCHAR2(20) not null,
+  SENHA           VARCHAR2(20) not null
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table ADMINISTRADOR
+  add constraint PK_ADMIN primary key (IDADMINISTRADOR)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+
+--
+
+-- Create table
+create table AREA
+(
+  IDAREA NUMBER(4) not null,
+  AREA   VARCHAR2(50)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table AREA
+  add constraint PK_AREA primary key (IDAREA)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+
+--
+-- Create table
+create table USUARIO
+(
+  IDUSUARIO   NUMBER(4) not null,
+  NOMEUSUARIO VARCHAR2(50),
+  AREA        NUMBER(4),
+  EMAIL       VARCHAR2(50)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table USUARIO
+  add constraint PK_USUARIO primary key (IDUSUARIO)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table USUARIO
+  add constraint FK_USUARIO foreign key (AREA)
+  references AREA (IDAREA);
+
+
+--
+-- Create table
+create table TIPOPROGRAMA
+(
+  IDTIPOPROGRAMA NUMBER(4) not null,
+  TIPOPROGRAMA   VARCHAR2(20)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table TIPOPROGRAMA
+  add constraint PK_TIPOPROGRAMA primary key (IDTIPOPROGRAMA)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+
+
+--
+-- Create table
+create table PROGRAMA
+(
+  IDPROGRAMA   NUMBER(4) not null,
+  NOMEPROGRAMA VARCHAR2(50),
+  TIPOPROGRAMA INTEGER not null
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table PROGRAMA
+  add constraint PK_PROGRAMA primary key (IDPROGRAMA)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table PROGRAMA
+  add foreign key (TIPOPROGRAMA)
+  references TIPOPROGRAMA (IDTIPOPROGRAMA);
+
+
+--
+-- Create table
+create table PONTUACAO
+(
+  IDPONTUACAO NUMBER(10) not null,
+  USUARIO     NUMBER(4) not null,
+  PROGRAMA    NUMBER(4),
+  DATA        DATE,
+  PONTOS      NUMBER(4),
+  BONUS       NUMBER(4)
+)
+tablespace USERS
+  pctfree 10
+  initrans 1
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+-- Create/Recreate primary, unique and foreign key constraints 
+alter table PONTUACAO
+  add constraint PK_PONTUACAO primary key (IDPONTUACAO)
+  using index 
+  tablespace USERS
+  pctfree 10
+  initrans 2
+  maxtrans 255
+  storage
+  (
+    initial 64K
+    minextents 1
+    maxextents unlimited
+  );
+alter table PONTUACAO
+  add constraint FK_PONTUACAOPROGRAMA foreign key (PROGRAMA)
+  references PROGRAMA (IDPROGRAMA) on delete cascade;
+alter table PONTUACAO
+  add constraint FK_PONTUACAOUSUARIO foreign key (USUARIO)
+  references USUARIO (IDUSUARIO) on delete cascade;
+
+
+--
+-- Create sequence 
+create sequence ADMINISTRADOR_SEQ
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 41
+increment by 1
+cache 20;
+
+
+--
+-- Create sequence 
+create sequence AREA_SEQ
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 21
+increment by 1
+cache 20;
+
+
+--
+-- Create sequence 
+create sequence USUARIOS_SEQ
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 41
+increment by 1
+cache 20;
+
+
+--
+-- Create sequence 
+create sequence TIPOPROGRAMA_SEQ
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 21
+increment by 1
+cache 20;
+
+
+--
+-- Create sequence 
+create sequence PROGRAMA_SEQ
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 41
+increment by 1
+cache 20;
+
+
+-- 
+-- Create sequence 
+create sequence PONTUACAO_SEQ
+minvalue 1
+maxvalue 999999999999999999999999999
+start with 41
+increment by 1
+cache 20;
+
+--
+--
+INSERT INTO Administrador
+VALUES (administrador_seq.nextval, 'Admin', 'ilg2013er');
