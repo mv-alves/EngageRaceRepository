@@ -159,7 +159,7 @@ public class RelatorioDao {
 	  		session.beginTransaction();
 	  		
 			String sql = "";
-			sql+="SELECT TO_CHAR(PO.DATA, 'DD/MM/YYYY') AS \"data\", ";
+			sql+="SELECT DATE_FORMAT(campo , '%d/%m/%Y') AS \"data\", ";
 			sql+=" PO.PONTOS AS \"pontos\", ";
 			sql+="PO.BONUS AS \"bonus\", ";
 			sql+="T.TIPOPROGRAMA AS \"tipoprograma\", ";

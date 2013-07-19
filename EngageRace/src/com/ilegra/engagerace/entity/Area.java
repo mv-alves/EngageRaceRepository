@@ -1,17 +1,21 @@
 package com.ilegra.engagerace.entity;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table (name = "AREA")
 public class Area {
 	
 	@Id
-	@SequenceGenerator(name="my_area_seq", sequenceName="AREA_SEQ")	
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="my_area_seq")
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Basic (optional = false)
+	@Column (name = "IDAREA")
 	private Integer idArea;
 	private String area;
 	

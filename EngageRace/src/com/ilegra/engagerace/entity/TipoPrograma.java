@@ -1,17 +1,21 @@
 package com.ilegra.engagerace.entity;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table (name = "TIPOPROGRAMA")
 public class TipoPrograma {
 	
 	@Id
-	@SequenceGenerator(name="TipoPrograma_seq", sequenceName="TipoPrograma_seq")	
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="TipoPrograma_seq")
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Basic (optional = false)
+	@Column (name = "IDTIPOPROGRAMA")
 	private Integer idTipoPrograma;
 	private String tipoPrograma;
 	

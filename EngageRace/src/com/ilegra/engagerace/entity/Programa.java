@@ -1,5 +1,7 @@
 package com.ilegra.engagerace.entity;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -7,14 +9,16 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
+@Table (name = "PROGRAMA")
 public class Programa {
 	
 	@Id
-	@SequenceGenerator(name="my_programa_seq", sequenceName="PROGRAMA_SEQ")	
-	@GeneratedValue(strategy=GenerationType.AUTO, generator="my_programa_seq")
+	@GeneratedValue (strategy = GenerationType.IDENTITY)
+	@Basic (optional = false)
+	@Column (name = "IDPROGRAMA")
 	private Integer idPrograma;
 	private String nomePrograma;
 	
