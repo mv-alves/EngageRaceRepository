@@ -1,6 +1,7 @@
 package com.ilegra.engagerace.dto;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 
 public class RelatorioDto {
 	
@@ -10,9 +11,9 @@ public class RelatorioDto {
 	String programa;
 	String nomeusuario;
 	String area;
-	BigDecimal ocorrencias;
-	BigDecimal pontos;
-	BigDecimal bonus;
+	BigInteger ocorrencias;
+	Integer pontos;
+	Integer bonus;
 	String data;
 	
 	public RelatorioDto() {
@@ -66,27 +67,27 @@ public class RelatorioDto {
 		this.area = area;
 	}
 
-	public BigDecimal getOcorrencias() {
+	public BigInteger getOcorrencias() {
 		return ocorrencias;
 	}
 
-	public void setOcorrencias(BigDecimal ocorrencias) {
+	public void setOcorrencias(BigInteger ocorrencias) {
 		this.ocorrencias = ocorrencias;
 	}
 
-	public BigDecimal getPontos() {
+	public Integer getPontos() {
 		return pontos;
 	}
 
-	public void setPontos(BigDecimal pontos) {
+	public void setPontos(Integer pontos) {
 		this.pontos = pontos;
 	}
 
-	public BigDecimal getBonus() {
+	public Integer getBonus() {
 		return bonus;
 	}
 
-	public void setBonus(BigDecimal bonus) {
+	public void setBonus(Integer bonus) {
 		this.bonus = bonus;
 	}
 

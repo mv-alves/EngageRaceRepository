@@ -159,8 +159,8 @@ public class RelatorioDao {
 	  		session.beginTransaction();
 	  		
 			String sql = "";
-			sql+="SELECT DATE_FORMAT(campo , '%d/%m/%Y') AS \"data\", ";
-			sql+=" PO.PONTOS AS \"pontos\", ";
+			sql+="SELECT DATE_FORMAT(data , '%d/%m/%Y') AS \"data\", ";
+			sql+="PO.PONTOS AS \"pontos\", ";
 			sql+="PO.BONUS AS \"bonus\", ";
 			sql+="T.TIPOPROGRAMA AS \"tipoprograma\", ";
 			sql+="PR.NOMEPROGRAMA AS \"programa\",  ";
