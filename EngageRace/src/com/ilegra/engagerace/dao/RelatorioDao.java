@@ -45,7 +45,7 @@ public class RelatorioDao {
 				sql+= "AND T.IDTIPOPROGRAMA= ? ";
 			
 			if(periodoInicioP != null && !periodoInicioP.equals("") && periodoFimP != null && !periodoFimP.equals(""))
-				sql+= "AND TRUNC(PO.DATA) BETWEEN TO_DATE(?, 'DD/MM/YYYY') AND TO_DATE(?, 'DD/MM/YYYY') ";
+				sql+= "AND TRUNC(PO.DATA) BETWEEN DATE_FORMAT(data , '%%d/%%m/%%Y') AND DATE_FORMAT(data , '%%d/%%m/%%Y') ";
 			
 			sql+= "GROUP BY U.NOMEUSUARIO, A.AREA, PR.NOMEPROGRAMA, T.TIPOPROGRAMA ";
 			sql+= "ORDER BY \"totalpontos\" DESC, \"tipoprograma\", \"programa\", \"nomeusuario\", \"area\""; 
@@ -70,13 +70,12 @@ public class RelatorioDao {
 	  			q.setString(index++, periodoInicioP);
 	  	  		q.setString(index++, periodoFimP);
 	  		}
-	  		
 	  		lista = q.list();
-	  	    session.getTransaction().commit();
 	  	
 		} catch(Exception e){
 			e.printStackTrace();
-			session.close();			
+		} finally{
+			session.close();
 		}
   		return lista;
 	}
@@ -113,7 +112,7 @@ public class RelatorioDao {
   				sql+= "AND T.IDTIPOPROGRAMA= ? ";
   			
   			if(periodoInicioP != null && !periodoInicioP.equals("") && periodoFimP != null && !periodoFimP.equals(""))
-  				sql+= "AND TRUNC(PO.DATA) BETWEEN TO_DATE(?, 'DD/MM/YYYY') AND TO_DATE(?, 'DD/MM/YYYY') ";
+  				sql+= "AND TRUNC(PO.DATA) BETWEEN DATE_FORMAT(data , '%%d/%%m/%%Y') AND DATE_FORMAT(data , '%%d/%%m/%%Y') ";
   			
   			sql+= "GROUP BY U.NOMEUSUARIO, A.AREA ";
   			sql+= "ORDER BY \"totalpontos\" DESC, \"nomeusuario\", \"area\""; 
@@ -138,13 +137,12 @@ public class RelatorioDao {
 	  	  		q.setString(index++, periodoInicioP);
 	  	  		q.setString(index++, periodoFimP);
   	  		}
-  	  		
   	  		lista = q.list();
-  	  	    session.getTransaction().commit();
   	  		
   		}catch(Exception e){
   			e.printStackTrace();
-  			session.close();  			
+  		}finally{
+  			session.close();
   		}
 	  		return lista;
 	}
@@ -159,7 +157,7 @@ public class RelatorioDao {
 	  		session.beginTransaction();
 	  		
 			String sql = "";
-			sql+="SELECT DATE_FORMAT(data , '%d/%m/%Y') AS \"data\", ";
+			sql+="SELECT DATE_FORMAT(data , '%%d/%%m/%%Y') AS \"data\", ";
 			sql+="PO.PONTOS AS \"pontos\", ";
 			sql+="PO.BONUS AS \"bonus\", ";
 			sql+="T.TIPOPROGRAMA AS \"tipoprograma\", ";
@@ -185,7 +183,7 @@ public class RelatorioDao {
 				sql+= "AND T.IDTIPOPROGRAMA= ? ";
 			
 			if(periodoInicioP != null && !periodoInicioP.equals("") && periodoFimP != null && !periodoFimP.equals(""))
-				sql+= "AND TRUNC(PO.DATA) BETWEEN TO_DATE('?', 'DD/MM/YYYY') AND TO_DATE('?', 'DD/MM/YYYY') ";
+				sql+= "AND TRUNC(PO.DATA) BETWEEN DATE_FORMAT(data , '%%d/%%m/%%Y') AND DATE_FORMAT(data , '%%d/%%m/%%Y') ";
 			
 			sql+= "ORDER BY \"data\" DESC, \"tipoprograma\", \"programa\", \"area\"";
 	  		
@@ -211,11 +209,11 @@ public class RelatorioDao {
 			} 		
 	  		  		
 	  		lista = q.list();
-	  	    session.getTransaction().commit();
 	  	
 		}catch(Exception e){
 			e.printStackTrace();
-			session.close();			
+		}finally{
+			session.close();
 		}
   		return lista;
 	}

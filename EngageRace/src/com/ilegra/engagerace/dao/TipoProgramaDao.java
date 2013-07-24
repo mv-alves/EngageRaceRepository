@@ -16,7 +16,7 @@ public class TipoProgramaDao {
   		session.beginTransaction();
   	    Criteria c = session.createCriteria(TipoPrograma.class);
   	    tipos = c.list();
-  	    session.getTransaction().commit();
+  	    session.close();
   		return tipos;
 	}
 }

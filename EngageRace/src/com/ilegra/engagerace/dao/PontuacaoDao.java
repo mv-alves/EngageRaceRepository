@@ -17,20 +17,23 @@ public class PontuacaoDao {
         session.beginTransaction();
         session.update(pontuacao);
         session.getTransaction().commit();
+        session.close();
 	}
 
 	public void salvaPontuacao(Pontuacao pontuacao) {
 		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         session.save(pontuacao);
-        session.getTransaction().commit();		
+        session.getTransaction().commit();	
+        session.close();
 	}
 
 	public void excluiPontuacao(Pontuacao pontuacao) {
 		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         session.delete(pontuacao);
-        session.getTransaction().commit();		
+        session.getTransaction().commit();	
+        session.close();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,8 +44,7 @@ public class PontuacaoDao {
   	    Criteria c = session.createCriteria(Pontuacao.class);
   	    
   	    pontos = c.list();
-  	    session.getTransaction().commit();
-  		  		
+  	    session.close();  		  		
   		return pontos;
 	}
 }

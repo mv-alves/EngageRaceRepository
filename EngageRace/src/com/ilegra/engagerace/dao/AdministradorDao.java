@@ -17,7 +17,8 @@ public class AdministradorDao {
 		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
         session.save(administrador);
-        session.getTransaction().commit();			
+        session.getTransaction().commit();	
+        session.close();
 	}
 
 	public void editaAdministrador(Administrador administrador) {
@@ -26,6 +27,7 @@ public class AdministradorDao {
         session.beginTransaction();
         session.update(administrador);
         session.getTransaction().commit();
+        session.close();
 	}
 
 	public void excluiAdministrador(Administrador administrador) {
@@ -33,6 +35,7 @@ public class AdministradorDao {
         session.beginTransaction();
         session.delete(administrador);
         session.getTransaction().commit();		
+        session.close();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -43,8 +46,7 @@ public class AdministradorDao {
   	    Criteria c = session.createCriteria(Administrador.class);
   	    
   	    administradores = c.list();
-  	    session.getTransaction().commit();
-  		  		
+  	    session.close();  		  		
   		return administradores;
 	}
 }

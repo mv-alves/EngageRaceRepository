@@ -21,7 +21,7 @@ public class LoginDao {
 	    	c.add(Restrictions.eq("senha", senha));
 	    }
 	    Administrador result = (Administrador)c.uniqueResult();	    
-	    session.getTransaction().commit();
+	    session.close();
 	    return result;
 	}
 }

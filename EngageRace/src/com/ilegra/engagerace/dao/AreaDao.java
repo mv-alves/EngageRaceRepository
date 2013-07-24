@@ -17,7 +17,7 @@ public class AreaDao {
   		session.beginTransaction();
   	    Criteria c = session.createCriteria(Area.class);
   	    tipos = c.list();
-  	    session.getTransaction().commit();
-  		return tipos;
+  	    session.close();
+  	    return tipos;
 	}
 }

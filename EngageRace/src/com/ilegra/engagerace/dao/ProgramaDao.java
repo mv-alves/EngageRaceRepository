@@ -16,6 +16,7 @@ public class ProgramaDao {
         session.beginTransaction();
         session.save(programa);
         session.getTransaction().commit();		
+        session.close();
 	}
 
 	public void editaPrograma(Programa programa) {
@@ -24,6 +25,7 @@ public class ProgramaDao {
         session.beginTransaction();
         session.update(programa);
         session.getTransaction().commit();
+        session.close();
 	}
 
 	public void excluiPrograma(Programa programa) {
@@ -31,6 +33,7 @@ public class ProgramaDao {
         session.beginTransaction();
         session.delete(programa);
         session.getTransaction().commit();
+        session.close();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,7 +44,7 @@ public class ProgramaDao {
   	    Criteria c = session.createCriteria(Programa.class);
   	    
   	    programas = c.list();
-  	    session.getTransaction().commit();
-  		return programas;
+  	    session.close();
+  	    return programas;
 	}
 }

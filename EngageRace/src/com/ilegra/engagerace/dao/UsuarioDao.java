@@ -15,6 +15,7 @@ public class UsuarioDao {
 	     session.beginTransaction();
 	     session.save(usuario);
 	     session.getTransaction().commit();
+	     session.close();
 	}
 
 	public void excluiUsuario(Usuario usuario) {
@@ -22,6 +23,7 @@ public class UsuarioDao {
         session.beginTransaction();
         session.delete(usuario);
         session.getTransaction().commit();
+        session.close();
 	}
 
 	public void editaUsuario(Usuario usuario) {
@@ -29,6 +31,7 @@ public class UsuarioDao {
         session.beginTransaction();
         session.update(usuario);
         session.getTransaction().commit();
+        session.close();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -39,11 +42,10 @@ public class UsuarioDao {
   	    Criteria c = session.createCriteria(Usuario.class);
   	    
   	    if(nome != null)    	
-  	    	c.add(Restrictions.like("nomeUsuario", "%" + nome.toLowerCase() + "%").ignoreCase());
+  	    	c.add(Restrictions.ilike("nomeUsuario", nome.toLowerCase()));
   	    
   		usuarios = c.list();
-  	    session.getTransaction().commit();
-  		  		
+  	    session.close();
   		return usuarios;
 	}
 }
