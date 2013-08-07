@@ -1,20 +1,19 @@
 package com.ilegra.engagerace.dto;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
+import java.util.Date;
 
 public class RelatorioDto {
 	
 	Integer idTipoRelatorio;
-	BigDecimal totalpontos;
-	String tipoprograma;
+	Integer totalPontos;
+	String tipoPrograma;
 	String programa;
-	String nomeusuario;
+	String nomeUsuario;
 	String area;
-	BigInteger ocorrencias;
+	Long ocorrencias;
 	Integer pontos;
 	Integer bonus;
-	String data;
+	Date data;
 	
 	public RelatorioDto() {
 	}
@@ -27,20 +26,20 @@ public class RelatorioDto {
 		this.idTipoRelatorio = idTipoRelatorio;
 	}
 
-	public BigDecimal getTotalpontos() {
-		return totalpontos;
+	public Integer getTotalpontos() {
+		return totalPontos;
 	}
 
-	public void setTotalpontos(BigDecimal totalpontos) {
-		this.totalpontos = totalpontos;
+	public void setTotalpontos(Integer totalpontos) {
+		this.totalPontos = totalpontos;
 	}
 
 	public String getTipoprograma() {
-		return tipoprograma;
+		return tipoPrograma;
 	}
 
 	public void setTipoprograma(String tipoprograma) {
-		this.tipoprograma = tipoprograma;
+		this.tipoPrograma = tipoprograma;
 	}
 
 	public String getPrograma() {
@@ -52,11 +51,11 @@ public class RelatorioDto {
 	}
 
 	public String getNomeusuario() {
-		return nomeusuario;
+		return nomeUsuario;
 	}
 
 	public void setNomeusuario(String nomeusuario) {
-		this.nomeusuario = nomeusuario;
+		this.nomeUsuario = nomeusuario;
 	}
 
 	public String getArea() {
@@ -67,11 +66,11 @@ public class RelatorioDto {
 		this.area = area;
 	}
 
-	public BigInteger getOcorrencias() {
+	public Long getOcorrencias() {
 		return ocorrencias;
 	}
 
-	public void setOcorrencias(BigInteger ocorrencias) {
+	public void setOcorrencias(Long ocorrencias) {
 		this.ocorrencias = ocorrencias;
 	}
 
@@ -91,11 +90,11 @@ public class RelatorioDto {
 		this.bonus = bonus;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 }

@@ -1,28 +1,29 @@
 package com.ilegra.engagerace.business;
 
-import java.text.SimpleDateFormat;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ilegra.engagerace.dao.PontuacaoDao;
 import com.ilegra.engagerace.dto.PontuacaoDto;
 import com.ilegra.engagerace.entity.Pontuacao;
 
+@Component
 public class PontuacaoBusiness {
 	
-	static PontuacaoDao pontuacaoDao = new PontuacaoDao();
-
-	public static void salvaPontuacao(PontuacaoDto dto)  throws Exception{
+	@Autowired private PontuacaoDao pontuacaoDao;
+	
+	@Transactional
+	public void salvaPontuacao(PontuacaoDto dto)  throws Exception{
 		Pontuacao pontuacao = new Pontuacao();	
 		pontuacao.setIdPontuacao(dto.getIdPontuacao());
 		pontuacao.setUsuario(dto.getUsuario());
 		pontuacao.setPrograma(dto.getPrograma());
-		
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		Date data = sdf.parse(dto.getData());		
-		
-		pontuacao.setData(data);
+		pontuacao.setData(dto.getData());
 		pontuacao.setPontos(dto.getPontos());
 		pontuacao.setBonus(dto.getBonus());
 		
@@ -32,13 +33,15 @@ public class PontuacaoBusiness {
 			pontuacaoDao.salvaPontuacao(pontuacao);
 	}
 
-	public static void excluiPontuacao(PontuacaoDto dto)  throws Exception{
+	@Transactional
+	public void excluiPontuacao(PontuacaoDto dto)  throws Exception{
 		Pontuacao pontuacao = new Pontuacao();
 		pontuacao.setIdPontuacao(dto.getIdPontuacao());
 		pontuacaoDao.excluiPontuacao(pontuacao);
 	}
 
-	public static List<PontuacaoDto> listaPontuacao() {
+	@Transactional(readOnly=true)
+	public List<PontuacaoDto> listaPontuacao() throws ParseException {
 		List<PontuacaoDto> list = null;
 		List<Pontuacao> pontos = pontuacaoDao.listaPontuacao();
 
@@ -51,11 +54,7 @@ public class PontuacaoBusiness {
 				dto.setIdPontuacao(ponto.getIdPontuacao());
 				dto.setUsuario(ponto.getUsuario());
 				dto.setPrograma(ponto.getPrograma());
-				
-				SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-				String data = sdf.format(ponto.getData());
-				
-				dto.setData(data);
+				dto.setData(ponto.getData());
 				dto.setPontuacao(ponto.getPontos());
 				dto.setBonus(ponto.getBonus());
 				list.add(dto);

@@ -329,7 +329,7 @@ jQuery(document).ready(function() {
 				
 				htmlOutput = '';
 				htmlOutputHeader = '';
-				
+								
 				var obj = jQuery.parseJSON(retorno);
 				
 				if (obj.length == 0) {
@@ -352,7 +352,7 @@ jQuery(document).ready(function() {
 					for (var i = 0; i < obj.length; i++) {
 						idTipoRelatorio = obj[i].idTipoRelatorio;
 						htmlOutput = htmlOutput + '<tr>';
-						htmlOutput = htmlOutput + '<td>' + obj[i].data + '</td>';
+						htmlOutput = htmlOutput + '<td>' + formataData(obj[i].data) + '</td>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].usuario + '</td>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].area + '</td>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].programa + '</td>';
@@ -395,4 +395,14 @@ jQuery(document).ready(function() {
 	   	$('#pesquisaPorPeriodoInicio').val("");
 	   	$('#pesquisaPorPeriodoFim').val("");
 	}	
+	
+	function formataData(data){
+		var dataArray = data.split('-');
+		var ano = dataArray[0];
+		var mes = dataArray[1];
+		var dia = dataArray[2];
+		var diaArray = dia.split(' ');
+		var diaFormatado = diaArray[0];
+	    return diaFormatado + "/" + mes + "/" + ano;
+	}
 	

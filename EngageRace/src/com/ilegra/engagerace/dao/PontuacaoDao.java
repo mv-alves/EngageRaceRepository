@@ -5,46 +5,41 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ilegra.engagerace.entity.Pontuacao;
-import com.ilegra.engagerace.util.HibernateUtil;
 
+@Repository
 public class PontuacaoDao {
+	
+	@Autowired private SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	private final Session getCurrentSession(){
+		return sessionFactory.getCurrentSession();
+	}
 
 	public void editaPontuacao(Pontuacao pontuacao) {
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		Session session = (Session) factory.getCurrentSession();
-        session.beginTransaction();
-        session.update(pontuacao);
-        session.getTransaction().commit();
-        session.close();
+        getCurrentSession().update(pontuacao);
 	}
 
 	public void salvaPontuacao(Pontuacao pontuacao) {
-		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        session.save(pontuacao);
-        session.getTransaction().commit();	
-        session.close();
+        getCurrentSession().save(pontuacao);
 	}
 
 	public void excluiPontuacao(Pontuacao pontuacao) {
-		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        session.delete(pontuacao);
-        session.getTransaction().commit();	
-        session.close();
+        getCurrentSession().delete(pontuacao);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Pontuacao> listaPontuacao() {
-		List<Pontuacao> pontos = null;
-  		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-  		session.beginTransaction();
-  	    Criteria c = session.createCriteria(Pontuacao.class);
-  	    
-  	    pontos = c.list();
-  	    session.close();  		  		
-  		return pontos;
+  	    Criteria c = getCurrentSession().createCriteria(Pontuacao.class);
+  	    c.addOrder(Order.desc("pontos"));
+  		return c.list();
 	}
 }

@@ -2,17 +2,29 @@ package com.ilegra.engagerace.dao;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import com.ilegra.engagerace.dto.LoginDto;
 import com.ilegra.engagerace.entity.Administrador;
-import com.ilegra.engagerace.util.HibernateUtil;
 
+@Repository
 public class LoginDao {
+	
+	@Autowired private SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	private final Session getCurrentSession(){
+		return sessionFactory.getCurrentSession();
+	}
 
 	public Administrador confirmaLogin(LoginDto dto) throws Exception{
-		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-  		session.beginTransaction();
-  	    Criteria c = session.createCriteria(Administrador.class);
+  	    Criteria c = getCurrentSession().createCriteria(Administrador.class);
   	    String login = dto.getLoginAdmin();
   	    String senha = dto.getSenhaAdmin(); 
   	  	    
@@ -20,8 +32,6 @@ public class LoginDao {
 	    	c.add(Restrictions.eq("login", login));
 	    	c.add(Restrictions.eq("senha", senha));
 	    }
-	    Administrador result = (Administrador)c.uniqueResult();	    
-	    session.close();
-	    return result;
+	    return (Administrador)c.uniqueResult();	
 	}
 }

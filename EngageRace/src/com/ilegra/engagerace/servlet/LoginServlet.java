@@ -3,11 +3,16 @@ package com.ilegra.engagerace.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.ilegra.engagerace.business.LoginBusiness;
 import com.ilegra.engagerace.dto.LoginDto;
@@ -15,6 +20,10 @@ import com.ilegra.engagerace.dto.LoginDto;
 public class LoginServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
+	
+	private PrintWriter out;
+	private LoginBusiness loginBusiness;
+	private ApplicationContext context;
 
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try{
@@ -28,10 +37,17 @@ public class LoginServlet extends HttpServlet{
 		}
 	}
 	
+	@Override
+	public void init() throws ServletException {
+	    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
+		BeanFactory factory = context;
+		loginBusiness = (LoginBusiness)factory.getBean("loginBusiness");
+	}
+	
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
 		String action = request.getParameter("action");
 		
-		PrintWriter out = response.getWriter();
+		out = response.getWriter();
 		
 		if (action.equals("confirmaLogin")) {
 
@@ -42,7 +58,7 @@ public class LoginServlet extends HttpServlet{
 			dto.setLoginAdmin(login);
 			dto.setSenhaAdmin(senha);
 			
-			Integer id = LoginBusiness.confirmaLogin(dto);
+			Integer id = loginBusiness.confirmaLogin(dto);
 
 			if (id != null){
 				HttpSession session = request.getSession();

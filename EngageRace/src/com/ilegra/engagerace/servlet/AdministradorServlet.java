@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import com.ilegra.engagerace.business.AdministradorBusiness;
 import com.ilegra.engagerace.dto.AdministradorDto;
 import com.ilegra.engagerace.json.AdministradorJSONConverter;
@@ -17,6 +21,11 @@ import com.ilegra.engagerace.json.AdministradorJSONConverter;
 public class AdministradorServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private PrintWriter out;
+	private AdministradorBusiness administradorBusiness;
+	private ApplicationContext context;
+
 
 		public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 			try{
@@ -30,8 +39,15 @@ public class AdministradorServlet extends HttpServlet {
 			}
 		}
 		
+		@Override
+		public void init() throws ServletException {
+		    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
+			BeanFactory factory = context;
+			administradorBusiness = (AdministradorBusiness)factory.getBean("adminBusiness");
+		}
+		
 		private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
-			PrintWriter out = response.getWriter();
+			out = response.getWriter();
 
 			String action = request.getParameter("action");
 			
@@ -51,13 +67,13 @@ public class AdministradorServlet extends HttpServlet {
 				dto.setSenha(senha);
 				
 				if (action.equals("salvaCadastro")) 
-					AdministradorBusiness.salvaAdministrador(dto);				
+					administradorBusiness.salvaAdministrador(dto);				
 				else 
-					AdministradorBusiness.excluiAdministrador(dto);
+					administradorBusiness.excluiAdministrador(dto);
 				
 			} else if(action.equals("buscaCadastro")) {       
 
-				List<AdministradorDto> administradores = AdministradorBusiness.listaAdminstrador(); 
+				List<AdministradorDto> administradores = administradorBusiness.listaAdminstrador(); 
 	    	    AdministradorJSONConverter converter = new AdministradorJSONConverter();
 	    	    out.println(converter.toJson(administradores));        		
 			} 

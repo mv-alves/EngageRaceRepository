@@ -1,32 +1,40 @@
 package com.ilegra.engagerace.business;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ilegra.engagerace.dao.RelatorioDao;
 import com.ilegra.engagerace.dto.RelatorioDto;
 
+@Component
 public class RelatorioBusiness {
 	
-	static RelatorioDao relatorioDao = new RelatorioDao();
+	@Autowired private RelatorioDao relatorioDao;
 
-	public static List<RelatorioDto> rankingPorPrograma(String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP)  throws Exception{
+	@Transactional(readOnly=true)
+	public List<RelatorioDto> rankingPorPrograma(String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP)  throws Exception{
 		return relatorioDao.rankingPorPrograma(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP);
 	}
-
-	public static List<RelatorioDto> rankingEngageRace(String usuarioP,	String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
+	
+	@Transactional(readOnly=true)
+	public List<RelatorioDto> rankingEngageRace(String usuarioP,	String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
 		return relatorioDao.rankingEngageRace(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP);
 	}
 
-	public static List<RelatorioDto> historicoUsuario(String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
+	@Transactional(readOnly=true)
+	public List<RelatorioDto> historicoUsuario(String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
 		return relatorioDao.historicoUsuario(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP);
 	}
 
-	public static HSSFWorkbook exportaRelatorio(String idTipoRelatorio, String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
+	public HSSFWorkbook exportaRelatorio(String idTipoRelatorio, String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
 				
 		List<RelatorioDto> registrosRelatorio = null;
 		String nomeRelatorio = null;
@@ -95,7 +103,7 @@ public class RelatorioBusiness {
 				
 				if(tipo == 3){
 					Cell cell1 = row.createCell(cellnum++);
-					cell1.setCellValue((String)registro.getData());
+					cell1.setCellValue((Date)registro.getData());
 				}
 				
 				Cell cell2 = row.createCell(cellnum++);

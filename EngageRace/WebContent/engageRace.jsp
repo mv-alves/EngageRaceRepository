@@ -23,22 +23,22 @@
 					<table border="0">											
 						<tr>
 							<td>
-								<a id="noUnderline" href="gerenciarPontuacao.jsp">Gerenciar Pontuação</a>
+								<a id="reload" href="gerenciarPontuacao.jsp">Gerenciar Pontuação</a>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<a id="noUnderline" href="gerenciarUsuario.jsp">Gerenciar Usuário</a>
+								<a id="reload" href="gerenciarUsuario.jsp">Gerenciar Usuário</a>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<a id="noUnderline" href="gerenciarPrograma.jsp">Gerenciar Programa</a>
+								<a id="reload" href="gerenciarPrograma.jsp">Gerenciar Programa</a>
 							</td>
 						</tr>
 						<tr>
 							<td>
-								<a id="noUnderline" href="relatorios.jsp">Relatórios</a>
+								<a id="reload" href="relatorios.jsp">Relatórios</a>
 							</td>
 						</tr>
 						<tr>

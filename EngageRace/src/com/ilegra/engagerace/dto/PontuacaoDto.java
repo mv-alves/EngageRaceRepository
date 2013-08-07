@@ -1,5 +1,7 @@
 package com.ilegra.engagerace.dto;
 
+import java.util.Date;
+
 import com.ilegra.engagerace.entity.Programa;
 import com.ilegra.engagerace.entity.Usuario;
 
@@ -8,12 +10,16 @@ public class PontuacaoDto {
 	private Integer idPontuacao;
 	private Usuario usuario;
 	private Programa programa;
-	private String data;
+	private Date data;
 	private Integer pontos;
 	private Integer bonus;
 	private Integer ocorrencias;
 	
 	public PontuacaoDto(){
+	}
+
+	public void setPontos(Integer pontos) {
+		this.pontos = pontos;
 	}
 
 	public Integer getIdPontuacao() {
@@ -40,11 +46,11 @@ public class PontuacaoDto {
 		this.programa = programa;
 	}
 
-	public String getData() {
+	public Date getData() {
 		return data;
 	}
 
-	public void setData(String data) {
+	public void setData(Date data) {
 		this.data = data;
 	}
 

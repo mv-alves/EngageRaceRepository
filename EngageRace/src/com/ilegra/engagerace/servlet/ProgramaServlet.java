@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+
 import com.ilegra.engagerace.business.ProgramaBusiness;
 import com.ilegra.engagerace.dto.ProgramaDto;
 import com.ilegra.engagerace.entity.TipoPrograma;
@@ -19,6 +23,9 @@ import com.ilegra.engagerace.json.ProgramaJSONConverter;
 public class ProgramaServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
+	
+	private ApplicationContext context;
+	private ProgramaBusiness programaBusiness;
 
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try{
@@ -30,6 +37,13 @@ public class ProgramaServlet extends HttpServlet {
 		} catch(Exception e){
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void init() throws ServletException {
+	    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
+		BeanFactory factory = context;
+		programaBusiness = (ProgramaBusiness)factory.getBean("programaBusiness");
 	}
 	
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
@@ -53,13 +67,13 @@ public class ProgramaServlet extends HttpServlet {
 			
 			if (action.equals("salvaPrograma")) {
 				dto.setTipoPrograma(new TipoPrograma(Integer.parseInt(tipoPrograma)));
-				ProgramaBusiness.salvaPrograma(dto);				
+				programaBusiness.salvaPrograma(dto);				
 			} else 
-				ProgramaBusiness.excluiPrograma(dto);
+				programaBusiness.excluiPrograma(dto);
 			
 		} else if(action.equals("buscaPrograma") || action.equals("carregaPrograma")) {       
 
-			List<ProgramaDto> programas = ProgramaBusiness.listaProgramas(); 
+			List<ProgramaDto> programas = programaBusiness.listaProgramas(); 
     	    ProgramaJSONConverter converter = new ProgramaJSONConverter();
     	    out.println(converter.toJson(programas));  
 		}

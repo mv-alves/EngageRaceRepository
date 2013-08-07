@@ -136,7 +136,7 @@ jQuery(document).ready(function() {
 						htmlOutput = htmlOutput + '<tr>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].usuario + '</td>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].programa + '</td>';
-						htmlOutput = htmlOutput + '<td>' + obj[i].data + '</td>';
+						htmlOutput = htmlOutput + '<td>' + formataData(obj[i].data) + '</td>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].pontos + '</td>';
 						htmlOutput = htmlOutput + '<td>' + obj[i].bonus + '</td>';
 						htmlOutput = htmlOutput + '<td align="center">';
@@ -158,3 +158,13 @@ jQuery(document).ready(function() {
        	$('#pontuacao').val("");
        	$('#bonus').val("");
 	}	
+	
+	function formataData(data){
+		var dataArray = data.split('-');
+		var ano = dataArray[0];
+		var mes = dataArray[1];
+		var dia = dataArray[2];
+		var diaArray = dia.split(' ');
+		var diaFormatado = diaArray[0];
+	    return diaFormatado + "/" + mes + "/" + ano;
+	}

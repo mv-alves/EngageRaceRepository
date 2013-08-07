@@ -3,15 +3,21 @@ package com.ilegra.engagerace.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ilegra.engagerace.dao.TipoProgramaDao;
 import com.ilegra.engagerace.dto.TipoProgramaDto;
 import com.ilegra.engagerace.entity.TipoPrograma;
 
+@Component
 public class TipoProgramaBusiness {
 	
-	static TipoProgramaDao tipoProgramaDao= new TipoProgramaDao(); 
-
-	public static List<TipoProgramaDto> listaTipoPrograma()  throws Exception{
+	@Autowired private TipoProgramaDao tipoProgramaDao;
+	
+	@Transactional (readOnly=true)
+	public List<TipoProgramaDto> listaTipoPrograma()  throws Exception{
 		List<TipoProgramaDto> list = null;
 		List<TipoPrograma> tipos = tipoProgramaDao.listaTipoPrograma();
 

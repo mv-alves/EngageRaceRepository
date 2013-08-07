@@ -5,46 +5,41 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.ilegra.engagerace.entity.Programa;
-import com.ilegra.engagerace.util.HibernateUtil;
 
+@Repository
 public class ProgramaDao {
 	
+	@Autowired private SessionFactory sessionFactory;
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+	
+	private final Session getCurrentSession(){
+		return sessionFactory.getCurrentSession();
+	}
+	
 	public void salvaPrograma(Programa programa) {
-		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        session.save(programa);
-        session.getTransaction().commit();		
-        session.close();
+        getCurrentSession().save(programa);
 	}
 
 	public void editaPrograma(Programa programa) {
-		SessionFactory factory = HibernateUtil.getSessionFactory();
-		Session session = (Session) factory.getCurrentSession();
-        session.beginTransaction();
-        session.update(programa);
-        session.getTransaction().commit();
-        session.close();
+        getCurrentSession().update(programa);
 	}
 
 	public void excluiPrograma(Programa programa) {
-        Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        session.delete(programa);
-        session.getTransaction().commit();
-        session.close();
+        getCurrentSession().delete(programa);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Programa> pesquisaPrograma() {
-		List<Programa> programas = null;
-  		Session session = (Session) HibernateUtil.getSessionFactory().getCurrentSession();
-  		session.beginTransaction();
-  	    Criteria c = session.createCriteria(Programa.class);
-  	    
-  	    programas = c.list();
-  	    session.close();
-  	    return programas;
+  	    Criteria c = getCurrentSession().createCriteria(Programa.class);
+  	    c.addOrder(Order.asc("nomePrograma"));
+  	    return c.list();
 	}
 }

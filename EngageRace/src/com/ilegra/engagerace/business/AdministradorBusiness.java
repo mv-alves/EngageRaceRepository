@@ -3,15 +3,21 @@ package com.ilegra.engagerace.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ilegra.engagerace.dao.AdministradorDao;
 import com.ilegra.engagerace.dto.AdministradorDto;
 import com.ilegra.engagerace.entity.Administrador;
 
+@Component
 public class AdministradorBusiness {
 	
-	static AdministradorDao administradorDao = new AdministradorDao();
+	@Autowired private AdministradorDao administradorDao;
 
-	public static void salvaAdministrador(AdministradorDto dto) throws Exception{
+	@Transactional
+	public void salvaAdministrador(AdministradorDto dto) {
 		Administrador administrador = new Administrador();	
 		administrador.setIdAdministrador(dto.getIdAdministrador());
 		administrador.setLogin(dto.getLogin());
@@ -23,13 +29,15 @@ public class AdministradorBusiness {
 			administradorDao.salvaAdministrador(administrador);
 	}
 
-	public static void excluiAdministrador(AdministradorDto dto) throws Exception{
+	@Transactional
+	public void excluiAdministrador(AdministradorDto dto) throws Exception{
 		Administrador administrador = new Administrador();
 		administrador.setIdAdministrador(dto.getIdAdministrador());
 		administradorDao.excluiAdministrador(administrador);
 	}
 
-	public static List<AdministradorDto> listaAdminstrador() throws Exception{
+	@Transactional(readOnly=true)
+	public List<AdministradorDto> listaAdminstrador() throws Exception{
 		List<AdministradorDto> list = null;
 		List<Administrador> administradores = administradorDao.pesquisaAdministrador();
 

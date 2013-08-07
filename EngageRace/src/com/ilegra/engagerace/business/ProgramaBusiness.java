@@ -3,15 +3,21 @@ package com.ilegra.engagerace.business;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.ilegra.engagerace.dao.ProgramaDao;
 import com.ilegra.engagerace.dto.ProgramaDto;
 import com.ilegra.engagerace.entity.Programa;
 
+@Component
 public class ProgramaBusiness {
 	
-	static ProgramaDao programaDao = new ProgramaDao();
+	@Autowired private ProgramaDao programaDao;
 
-	public static void salvaPrograma(ProgramaDto dto) throws Exception {
+	@Transactional
+	public void salvaPrograma(ProgramaDto dto) throws Exception {
 		Programa programa = new Programa();	
 		programa.setIdPrograma(dto.getIdPrograma());
 		programa.setNomePrograma(dto.getNomePrograma());
@@ -23,13 +29,15 @@ public class ProgramaBusiness {
 			programaDao.salvaPrograma(programa);
 	}
 
-	public static void excluiPrograma(ProgramaDto dto)  throws Exception{
+	@Transactional
+	public void excluiPrograma(ProgramaDto dto)  throws Exception{
 		Programa programa = new Programa();
 		programa.setIdPrograma(dto.getIdPrograma());
 		programaDao.excluiPrograma(programa);
 	}
 
-	public static List<ProgramaDto> listaProgramas()  throws Exception{
+	@Transactional(readOnly=true)
+	public List<ProgramaDto> listaProgramas()  throws Exception{
 		List<ProgramaDto> list = null;
 		List<Programa> programas = programaDao.pesquisaPrograma();
 

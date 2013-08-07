@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.springframework.beans.factory.BeanFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 import com.ilegra.engagerace.business.RelatorioBusiness;
 import com.ilegra.engagerace.dto.RelatorioDto;
@@ -20,6 +23,8 @@ import com.ilegra.engagerace.json.RelatorioJSONConverter;
 
 public class RelatorioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private RelatorioBusiness relatorioBusiness;
+	private ApplicationContext context;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try{
@@ -40,6 +45,13 @@ public class RelatorioServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 	}
+	
+	@Override
+	public void init() throws ServletException {
+	    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
+		BeanFactory factory = context;
+		relatorioBusiness = (RelatorioBusiness)factory.getBean("relatorioBusiness");
+	}
 
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
 		String action = request.getParameter("action");
@@ -52,7 +64,7 @@ public class RelatorioServlet extends HttpServlet {
 			String periodoInicioP = request.getParameter("pesquisaPorPeriodoInicio");
 			String periodoFimP = request.getParameter("pesquisaPorPeriodoFim");
 
-			List<RelatorioDto> relatorio = RelatorioBusiness.rankingPorPrograma(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP); 
+			List<RelatorioDto> relatorio = relatorioBusiness.rankingPorPrograma(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP); 
 			
     	    RelatorioJSONConverter converter = new RelatorioJSONConverter();
     		PrintWriter out = response.getWriter();    	    
@@ -66,7 +78,7 @@ public class RelatorioServlet extends HttpServlet {
 			String periodoInicioP = request.getParameter("pesquisaPorPeriodoInicio");
 			String periodoFimP = request.getParameter("pesquisaPorPeriodoFim");
 
-			List<RelatorioDto> relatorio = RelatorioBusiness.rankingEngageRace(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP); 
+			List<RelatorioDto> relatorio = relatorioBusiness.rankingEngageRace(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP); 
 			
     	    RelatorioJSONConverter converter = new RelatorioJSONConverter();
     		PrintWriter out = response.getWriter();    	    
@@ -80,7 +92,7 @@ public class RelatorioServlet extends HttpServlet {
 			String periodoInicioP = request.getParameter("pesquisaPorPeriodoInicio");
 			String periodoFimP = request.getParameter("pesquisaPorPeriodoFim");
 
-			List<RelatorioDto> relatorio = RelatorioBusiness.historicoUsuario(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP); 
+			List<RelatorioDto> relatorio = relatorioBusiness.historicoUsuario(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP); 
 			
     	    RelatorioJSONConverter converter = new RelatorioJSONConverter();
     		PrintWriter out = response.getWriter();    	    
@@ -96,7 +108,7 @@ public class RelatorioServlet extends HttpServlet {
 			String periodoFimP = request.getParameter("pesquisaPorPeriodoFim");
 			
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();						
-			HSSFWorkbook workbook = RelatorioBusiness.exportaRelatorio(idTipoRelatorio, usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP);
+			HSSFWorkbook workbook = relatorioBusiness.exportaRelatorio(idTipoRelatorio, usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP);
 			workbook.write(baos);
 
 			int contentLength = baos.size();
