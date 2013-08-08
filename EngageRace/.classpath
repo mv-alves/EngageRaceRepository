@@ -118,5 +118,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/spring-webmvc-3.2.3.RELEASE-sources.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/com.springsource.org.aopalliance-1.0.0.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/com.springsource.org.aopalliance-sources-1.0.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/javaee-web-api-6.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
