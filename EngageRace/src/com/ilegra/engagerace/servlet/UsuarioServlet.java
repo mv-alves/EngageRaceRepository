@@ -14,6 +14,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.ilegra.engagerace.business.PontuacaoBusiness;
 import com.ilegra.engagerace.business.UsuarioBusiness;
 import com.ilegra.engagerace.dto.UsuarioDto;
 import com.ilegra.engagerace.entity.Area;
@@ -24,6 +25,7 @@ public class UsuarioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ApplicationContext context;
 	private UsuarioBusiness usuarioBusiness;
+	private PontuacaoBusiness pontuacaoBusiness;
 
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try{
@@ -42,6 +44,7 @@ public class UsuarioServlet extends HttpServlet {
 	    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
 		BeanFactory factory = context;
 		usuarioBusiness = (UsuarioBusiness)factory.getBean("usuarioBusiness");
+		pontuacaoBusiness = (PontuacaoBusiness)factory.getBean("pontuacaoBusiness");
 	}
 	
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
@@ -64,12 +67,21 @@ public class UsuarioServlet extends HttpServlet {
 			dto.setNomeUsuario(nomeUsuario);
 			dto.setEmail(email);
 			
+			Boolean existeRegistro = null;
+			
 			if (action.equals("salvarUsuario")) {
 				dto.setArea(new Area(Integer.parseInt(area)));
-				usuarioBusiness.salvaUsuario(dto);				
+				usuarioBusiness.salvaUsuario(dto);	
+				out.println("Ação executada com sucesso!");
 			} else 
-				usuarioBusiness.excluiUsuario(dto);
-			
+				existeRegistro = pontuacaoBusiness.buscaRegistroUsuario(dto.getIdUsuario());
+				if(existeRegistro)
+					out.println("A exclusão não pode ser realizada pois existem registros de Pontuação com este Usuário!");
+				else{
+					usuarioBusiness.excluiUsuario(dto);
+					out.println("Ação executada com sucesso!");
+				}
+
 		} else if(action.equals("buscaUsuario") || action.equals("carregaUsuario")) {   
 			
 			List<UsuarioDto> usuarios = null;
@@ -83,7 +95,6 @@ public class UsuarioServlet extends HttpServlet {
 			UsuarioJSONConverter converter = new UsuarioJSONConverter();
 			
     	    out.println(converter.toJson(usuarios));  
-    	    System.out.println("teste");
 		}        	
 	}
 }

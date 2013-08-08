@@ -62,4 +62,20 @@ public class PontuacaoBusiness {
 		}
 		return list;
 	}
+
+	@Transactional(readOnly=true)
+	public Boolean buscaRegistroUsuario(Integer idUsuario) {
+		List<Pontuacao> registros = pontuacaoDao.existeRegistroUsuario(idUsuario);
+		if (registros != null && registros.size() > 0)
+			return true;
+		return false;
+	}
+
+	@Transactional(readOnly=true)
+	public Boolean buscaRegistroPrograma(Integer idPrograma) {
+		List<Pontuacao> registros = pontuacaoDao.existeRegistroPrograma(idPrograma);
+		if (registros != null && registros.size() > 0)
+			return true;
+		return false;
+	}
 }

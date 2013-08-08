@@ -56,7 +56,7 @@
 						</tr>
 							<tr>
 								<td colspan="2" style="text-align:left">
-								<input type="button" id="btn_salvarUsuario" name="btn_salvarUsuario" value="Salvar novo usuário">
+								<input type="button" id="btn_salvarUsuario" name="btn_salvarUsuario" value="Salvar">
 								<input type="button" id="btn_cancelarUsuario" name="btn_cancelarUsuario" value="Cancelar"><br><br><br>
 								</td>
 							</tr>

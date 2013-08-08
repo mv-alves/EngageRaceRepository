@@ -89,6 +89,6 @@ public class PontuacaoServlet extends HttpServlet {
 			List<PontuacaoDto> pontos = pontuacaoBusiness.listaPontuacao(); 
     	    PontuacaoJSONConverter converter = new PontuacaoJSONConverter();
     	    out.println(converter.toJson(pontos));  
-		}
+		} 
 	}
 }

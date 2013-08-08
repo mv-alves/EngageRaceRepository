@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -41,5 +42,21 @@ public class PontuacaoDao {
   	    Criteria c = getCurrentSession().createCriteria(Pontuacao.class);
   	    c.addOrder(Order.desc("pontos"));
   		return c.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Pontuacao> existeRegistroUsuario(Integer idUsuario) {
+		Criteria c = getCurrentSession().createCriteria(Pontuacao.class, "PO");
+  		c.createAlias("PO.usuario", "U");
+		c.add(Restrictions.like("U.idUsuario", idUsuario));
+		return c.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Pontuacao> existeRegistroPrograma(Integer idPrograma) {
+		Criteria c = getCurrentSession().createCriteria(Pontuacao.class, "PO");
+		c.createAlias("PO.programa", "PR");
+		c.add(Restrictions.like("PR.idPrograma", idPrograma));
+		return c.list();
 	}
 }

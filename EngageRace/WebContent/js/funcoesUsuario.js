@@ -89,7 +89,7 @@ jQuery(document).ready(function() {
 		}, function(retorno) {
 		    carregaUsuario();
 		    limpaUsuarioForm();
-			alert('Ação executada com sucesso!');
+			alert(retorno);
 		});	       					
 	}	
 	

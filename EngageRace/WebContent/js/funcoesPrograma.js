@@ -78,7 +78,7 @@ jQuery(document).ready(function() {
 		}, function(retorno) {
 		    carregaPrograma();
 		    limpaProgramaForm();
-			alert('Ação executada com sucesso!');
+			alert(retorno);
 		});	       					
 	}	
 	

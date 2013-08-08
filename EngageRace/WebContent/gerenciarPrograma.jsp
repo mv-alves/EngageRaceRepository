@@ -48,7 +48,7 @@
 						</tr>				
 							<tr>
 								<td colspan="2" style="text-align:left">
-									<input type="button" id="btn_salvarPrograma" name="btn_salvarPrograma" value="Salvar novo programa">
+									<input type="button" id="btn_salvarPrograma" name="btn_salvarPrograma" value="Salvar">
 									<input type="button" id="btn_cancelarPrograma" name="btn_cancelarPrograma" value="Cancelar"><br><br><br>
 								</td>
 							</tr>

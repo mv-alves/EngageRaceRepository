@@ -71,7 +71,7 @@
 						</tr>
 							<tr>
 								<td colspan="2" style="text-align:left">
-									<input type="button" id="btn_salvarPontuacao" name="btn_salvarPontuacao" value="Salvar nova pontuação">
+									<input type="button" id="btn_salvarPontuacao" name="btn_salvarPontuacao" value="Salvar">
 									<input type="button" id="btn_cancelarPontuacao" name="btn_cancelarPontuacao" value="Cancelar"><br><br><br>
 								</td>
 							</tr>
@@ -100,12 +100,12 @@
 							</td>		
 							<td class="td2" width="50px" class="lblTitulo_generico_titulo">
 								<div align="center">
-									<b>Pontuacao</b>
+									<b>Pontuação</b>
 								</div>
 							</td>	
 							<td class="td2" width="50px" class="lblTitulo_generico_titulo">
 								<div align="center">
-									<b>Bonus</b>
+									<b>Bônus</b>
 								</div>
 							</td>	
 							

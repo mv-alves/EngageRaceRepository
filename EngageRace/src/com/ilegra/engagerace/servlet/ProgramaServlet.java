@@ -14,6 +14,7 @@ import org.springframework.beans.factory.BeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
+import com.ilegra.engagerace.business.PontuacaoBusiness;
 import com.ilegra.engagerace.business.ProgramaBusiness;
 import com.ilegra.engagerace.dto.ProgramaDto;
 import com.ilegra.engagerace.entity.TipoPrograma;
@@ -26,6 +27,7 @@ public class ProgramaServlet extends HttpServlet {
 	
 	private ApplicationContext context;
 	private ProgramaBusiness programaBusiness;
+	private PontuacaoBusiness pontuacaoBusiness;
 
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try{
@@ -44,6 +46,7 @@ public class ProgramaServlet extends HttpServlet {
 	    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
 		BeanFactory factory = context;
 		programaBusiness = (ProgramaBusiness)factory.getBean("programaBusiness");
+		pontuacaoBusiness = (PontuacaoBusiness)factory.getBean("pontuacaoBusiness");
 	}
 	
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
@@ -65,11 +68,21 @@ public class ProgramaServlet extends HttpServlet {
 			dto.setIdPrograma(idPrograma);			
 			dto.setNomePrograma(nomePrograma);
 			
+			Boolean existeRegistro = null;
+			
 			if (action.equals("salvaPrograma")) {
 				dto.setTipoPrograma(new TipoPrograma(Integer.parseInt(tipoPrograma)));
-				programaBusiness.salvaPrograma(dto);				
-			} else 
-				programaBusiness.excluiPrograma(dto);
+				programaBusiness.salvaPrograma(dto);	
+				out.println("Ação executada com sucesso!");
+			} else {
+				existeRegistro = pontuacaoBusiness.buscaRegistroPrograma(dto.getIdPrograma());
+				if(existeRegistro)
+					out.println("A exclusão não pode ser realizada pois existem registros de Pontuação com este Programa!");
+				else{
+					programaBusiness.excluiPrograma(dto);
+					out.println("Ação executada com sucesso!");
+				}
+			}
 			
 		} else if(action.equals("buscaPrograma") || action.equals("carregaPrograma")) {       
 
