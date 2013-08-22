@@ -27,75 +27,76 @@ public class UsuarioServlet extends HttpServlet {
 	private UsuarioBusiness usuarioBusiness;
 	private PontuacaoBusiness pontuacaoBusiness;
 
+	@Override
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		try{
-			request.setCharacterEncoding("UTF-8"); 
-	        response.setCharacterEncoding("UTF-8");  
-	        response.setContentType("text/html;charset=UTF-8");
-	        
-			handleRequest(request, response);			
+			request.setCharacterEncoding("UTF-8");
+			response.setCharacterEncoding("UTF-8");
+			response.setContentType("text/html;charset=UTF-8");
+
+			handleRequest(request, response);
 		} catch(Exception e){
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	public void init() throws ServletException {
-	    context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));	
+		context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));
 		BeanFactory factory = context;
 		usuarioBusiness = (UsuarioBusiness)factory.getBean("usuarioBusiness");
 		pontuacaoBusiness = (PontuacaoBusiness)factory.getBean("pontuacaoBusiness");
 	}
-	
+
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
 		PrintWriter out = response.getWriter();
 		String action = request.getParameter("action");
-		
+
 		if (action.equals("salvarUsuario") || action.equals("excluirUsuario")) {
 			Integer idUsuario = null;
 			String idUs = request.getParameter("idUsuario");
 
-			if (idUs != null && !idUs.equals("")) 
+			if (idUs != null && !idUs.equals(""))
 				idUsuario = Integer.parseInt(idUs);
-			
+
 			String nomeUsuario = request.getParameter("nomeUsuario");
 			String area = request.getParameter("areaUsuario");
 			String email = request.getParameter("email");
 
 			UsuarioDto dto = new UsuarioDto();
-			dto.setIdUsuario(idUsuario);			
+			dto.setIdUsuario(idUsuario);
 			dto.setNomeUsuario(nomeUsuario);
 			dto.setEmail(email);
-			
+
 			Boolean existeRegistro = null;
-			
+
 			if (action.equals("salvarUsuario")) {
 				dto.setArea(new Area(Integer.parseInt(area)));
-				usuarioBusiness.salvaUsuario(dto);	
-				out.println("Ação executada com sucesso!");
-			} else 
+				usuarioBusiness.salvaUsuario(dto);
+				out.println("Insercao executada com sucesso!");
+			} else
 				existeRegistro = pontuacaoBusiness.buscaRegistroUsuario(dto.getIdUsuario());
-				if(existeRegistro)
-					out.println("A exclusão não pode ser realizada pois existem registros de Pontuação com este Usuário!");
-				else{
-					usuarioBusiness.excluiUsuario(dto);
-					out.println("Ação executada com sucesso!");
-				}
+			if(existeRegistro)
+				out.println("A exclusao nao pode ser realizada pois existem registros de Pontuacao com este Usuario!");
+			else{
+				usuarioBusiness.excluiUsuario(dto);
+				out.println("insercao executada com sucesso!");
+			}
 
-		} else if(action.equals("buscaUsuario") || action.equals("carregaUsuario")) {   
-			
+		} else if(action.equals("buscaUsuario") || action.equals("carregaUsuario")) {
+
 			List<UsuarioDto> usuarios = null;
 			if (action.equals("buscaUsuario")){
 				String chave = request.getParameter("pesquisaPorUsuario");
-				chave = (chave == null || chave.equals("null")) ? null : chave;
-				usuarios = usuarioBusiness.pesquisaUsuario(chave); 
-	    	} else
-				usuarios = usuarioBusiness.pesquisaUsuario(null); 			
-			
+				chave = chave == null || chave.equals("null") ? null : chave;
+				usuarios = usuarioBusiness.pesquisaUsuario(chave);
+			} else
+				usuarios = usuarioBusiness.pesquisaUsuario(null);
+
 			UsuarioJSONConverter converter = new UsuarioJSONConverter();
-			
-    	    out.println(converter.toJson(usuarios));  
-		}        	
+
+			out.println(converter.toJson(usuarios));
+		}
 	}
 }
 

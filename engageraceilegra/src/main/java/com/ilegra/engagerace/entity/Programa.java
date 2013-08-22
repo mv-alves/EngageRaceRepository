@@ -14,21 +14,21 @@ import javax.persistence.Table;
 @Entity
 @Table (name = "PROGRAMA")
 public class Programa {
-	
+
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
 	@Basic (optional = false)
 	@Column (name = "IDPROGRAMA")
 	private Integer idPrograma;
 	private String nomePrograma;
-	
+
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="TipoPrograma", referencedColumnName="idTipoPrograma")
 	private TipoPrograma tipoPrograma;
-	
+
 	public Programa(){
 	}
-	
+
 	public Programa(int idPrograma) {
 		this.idPrograma = idPrograma;
 	}
@@ -38,11 +38,11 @@ public class Programa {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((idPrograma == null) ? 0 : idPrograma.hashCode());
+				+ (idPrograma == null ? 0 : idPrograma.hashCode());
 		result = prime * result
-				+ ((nomePrograma == null) ? 0 : nomePrograma.hashCode());
+				+ (nomePrograma == null ? 0 : nomePrograma.hashCode());
 		result = prime * result
-				+ ((tipoPrograma == null) ? 0 : tipoPrograma.hashCode());
+				+ (tipoPrograma == null ? 0 : tipoPrograma.hashCode());
 		return result;
 	}
 

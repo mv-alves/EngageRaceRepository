@@ -12,23 +12,23 @@ import com.ilegra.engagerace.entity.Administrador;
 
 @Repository
 public class AdministradorDao {
-	
+
 	@Autowired private SessionFactory sessionFactory;
-	
+
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
+
 	private final Session getCurrentSession(){
 		return sessionFactory.getCurrentSession();
 	}
-	
+
 	public void salvaAdministrador(Administrador administrador) {
-        getCurrentSession().save(administrador);
+		getCurrentSession().save(administrador);
 	}
 
 	public void editaAdministrador(Administrador administrador) {
-        getCurrentSession().update(administrador);
+		getCurrentSession().update(administrador);
 	}
 
 	public void excluiAdministrador(Administrador administrador) {
@@ -37,7 +37,7 @@ public class AdministradorDao {
 
 	@SuppressWarnings("unchecked")
 	public List<Administrador> pesquisaAdministrador() {
-  	    Criteria c = getCurrentSession().createCriteria(Administrador.class);
-  		return c.list();
+		Criteria c = getCurrentSession().createCriteria(Administrador.class);
+		return c.list();
 	}
 }
