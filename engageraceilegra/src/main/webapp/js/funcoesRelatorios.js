@@ -241,7 +241,7 @@ jQuery(document).ready(function() {
 					
 					htmlOutput = htmlOutput + '<tr>';
 					htmlOutput = htmlOutput + '<td align="right">';
-					htmlOutput = htmlOutput + '<a href=\'/EngageRace/RelatorioServlet?action=Relatorio';
+					htmlOutput = htmlOutput + '<a href=\'/RelatorioServlet?action=Relatorio';
 					htmlOutput = htmlOutput + '&idTipoRelatorio='+ idTipoRelatorio;
 					htmlOutput = htmlOutput + '&pesquisaPorUsuario='+ $('#pesquisaPorUsuario').val();
 					htmlOutput = htmlOutput + '&pesquisaPorArea='+$('#pesquisaPorArea').val();
@@ -299,7 +299,7 @@ jQuery(document).ready(function() {
 					
 					htmlOutput = htmlOutput + '<tr>';
 					htmlOutput = htmlOutput + '<td align="right">';
-					htmlOutput = htmlOutput + '<a href=\'/EngageRace/RelatorioServlet?action=Relatorio';
+					htmlOutput = htmlOutput + '<a href=\'/RelatorioServlet?action=Relatorio';
 					htmlOutput = htmlOutput + '&idTipoRelatorio='+ idTipoRelatorio;
 					htmlOutput = htmlOutput + '&pesquisaPorUsuario='+ $('#pesquisaPorUsuario').val();
 					htmlOutput = htmlOutput + '&pesquisaPorArea='+$('#pesquisaPorArea').val();
@@ -366,7 +366,7 @@ jQuery(document).ready(function() {
 					
 					htmlOutput = htmlOutput + '<tr>';
 					htmlOutput = htmlOutput + '<td align="right">';
-					htmlOutput = htmlOutput + '<a href=\'/EngageRace/RelatorioServlet?action=Relatorio';
+					htmlOutput = htmlOutput + '<a href=\'/RelatorioServlet?action=Relatorio';
 					htmlOutput = htmlOutput + '&idTipoRelatorio='+ idTipoRelatorio;
 					htmlOutput = htmlOutput + '&pesquisaPorUsuario='+ $('#pesquisaPorUsuario').val();
 					htmlOutput = htmlOutput + '&pesquisaPorArea='+$('#pesquisaPorArea').val();

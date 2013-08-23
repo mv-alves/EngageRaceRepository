@@ -32,7 +32,7 @@ public class RelatorioBusiness {
 	public List<RelatorioDto> historicoUsuario(String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
 		return relatorioDao.historicoUsuario(usuarioP, areaP, periodoInicioP, periodoFimP, programaP, tipoP);
 	}
-
+	@Transactional
 	public HSSFWorkbook exportaRelatorio(String idTipoRelatorio, String usuarioP, String areaP, String periodoInicioP, String periodoFimP, String programaP, String tipoP) throws Exception {
 
 		List<RelatorioDto> registrosRelatorio = null;
