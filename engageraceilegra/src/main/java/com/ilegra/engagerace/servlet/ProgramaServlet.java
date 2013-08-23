@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.ilegra.engagerace.business.PontuacaoBusiness;
 import com.ilegra.engagerace.business.ProgramaBusiness;
@@ -27,9 +26,9 @@ public class ProgramaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	private ApplicationContext context;
 	private ProgramaBusiness programaBusiness;
 	private PontuacaoBusiness pontuacaoBusiness;
+	private WebApplicationContext context;
 
 	@Override
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -46,10 +45,10 @@ public class ProgramaServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));
-		BeanFactory factory = context;
-		programaBusiness = (ProgramaBusiness)factory.getBean("programaBusiness");
-		pontuacaoBusiness = (PontuacaoBusiness)factory.getBean("pontuacaoBusiness");
+		context = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(getServletContext());
+		pontuacaoBusiness = (PontuacaoBusiness)context.getBean("pontuacaoBusiness");
+		programaBusiness = (ProgramaBusiness)context.getBean("programaBusiness");
 	}
 
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {

@@ -13,9 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.ilegra.engagerace.business.RelatorioBusiness;
 import com.ilegra.engagerace.dto.RelatorioDto;
@@ -24,7 +23,7 @@ import com.ilegra.engagerace.json.RelatorioJSONConverter;
 public class RelatorioServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private RelatorioBusiness relatorioBusiness;
-	private ApplicationContext context;
+	private WebApplicationContext context;
 
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -50,9 +49,9 @@ public class RelatorioServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));
-		BeanFactory factory = context;
-		relatorioBusiness = (RelatorioBusiness)factory.getBean("relatorioBusiness");
+		context = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(getServletContext());
+		relatorioBusiness = (RelatorioBusiness)context.getBean("relatorioBusiness");
 	}
 
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {

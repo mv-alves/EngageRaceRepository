@@ -10,9 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.ilegra.engagerace.business.PontuacaoBusiness;
 import com.ilegra.engagerace.business.UsuarioBusiness;
@@ -23,9 +22,9 @@ import com.ilegra.engagerace.json.UsuarioJSONConverter;
 public class UsuarioServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
-	private ApplicationContext context;
 	private UsuarioBusiness usuarioBusiness;
 	private PontuacaoBusiness pontuacaoBusiness;
+	private WebApplicationContext context;
 
 	@Override
 	public void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
@@ -42,10 +41,10 @@ public class UsuarioServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		context = new FileSystemXmlApplicationContext(getServletContext().getRealPath("/WEB-INF/spring-config.xml"));
-		BeanFactory factory = context;
-		usuarioBusiness = (UsuarioBusiness)factory.getBean("usuarioBusiness");
-		pontuacaoBusiness = (PontuacaoBusiness)factory.getBean("pontuacaoBusiness");
+		context = WebApplicationContextUtils
+				.getRequiredWebApplicationContext(getServletContext());
+		pontuacaoBusiness = (PontuacaoBusiness)context.getBean("pontuacaoBusiness");
+		usuarioBusiness = (UsuarioBusiness)context.getBean("usuarioBusiness");
 	}
 
 	private void handleRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, SQLException, Exception {
